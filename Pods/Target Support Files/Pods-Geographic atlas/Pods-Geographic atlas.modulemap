@@ -1,0 +1,6 @@
+framework module Pods_Geographic_atlas {
+  umbrella header "Pods-Geographic atlas-umbrella.h"
+
+  export *
+  module * { export * }
+}
