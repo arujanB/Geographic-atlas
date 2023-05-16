@@ -70,7 +70,7 @@ extension MainTableViewCell: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = SectionHeaderCountriesList()
+        let view = CountriesListTableViewCell()
         
         view.getToggleIcon()
         return view
@@ -98,15 +98,16 @@ extension MainTableViewCell: UITableViewDelegate {
         let view = SectionFooterCountriesList()
         view.navigationController = self.navigationController
         
-        view.outputDetail = {
-            guard let navigationController = self.navigationController else {
-                return
-            }
-
-            let vc = CountryDetailsViewController()
-            navigationController.pushViewController(vc, animated: true)
-            print("Tapped")
-        }
+        //it is works^ just to save
+//        view.outputDetail = {
+//            guard let navigationController = self.navigationController else {
+//                return
+//            }
+//
+//            let vc = CountryDetailsViewController()
+//            navigationController.pushViewController(vc, animated: true)
+//            print("Tapped")
+//        }
         
         return view
     }

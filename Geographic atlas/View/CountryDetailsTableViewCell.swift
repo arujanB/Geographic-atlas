@@ -7,14 +7,10 @@
 
 import UIKit
 
-class InfoTableViewCell: UITableViewCell {
-    static let IDENTIFIER = "InfoTableViewCell"
+class CountryDetailsTableViewCell: UITableViewCell {
+    static let IDENTIFIER = "CountryDetailsTableViewCell"
     
-    private lazy var myLabel: UILabel = {
-        var label = UILabel()
-        label.text = "label"
-        return label
-    }()
+    private lazy var cellData: UILabel = label(with: "Region")
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -26,17 +22,26 @@ class InfoTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    func label(with text: String) -> UILabel {
+        var label = UILabel()
+        label.text = text
+        return label
+    }
+    
+    func setData(with text: String) {
+        cellData.text = text
+    }
 }
 
 //MARK: - setUpViews and setUpConstraints
-extension InfoTableViewCell {
+extension CountryDetailsTableViewCell {
     func setUPViews(){
-        contentView.addSubview(myLabel)
+        contentView.addSubview(cellData)
     }
     
     func setUpConstraints() {
-        myLabel.snp.makeConstraints { make in
+        cellData.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(22)
         }
     }

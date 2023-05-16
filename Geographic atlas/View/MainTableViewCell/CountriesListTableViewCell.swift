@@ -6,9 +6,14 @@
 //
 
 import UIKit
+import Kingfisher
 
-class SectionHeaderCountriesList: UITableViewCell {
+class CountriesListTableViewCell: UITableViewCell {
     static let IDENTIFIER = "CountriesListTableViewCell"
+    
+    weak var navigationController: UINavigationController?
+    
+    var outputDetail: (() -> Void)?
     
     private lazy var flagImg: UIImageView = {
         let img = UIImageView()
@@ -19,14 +24,17 @@ class SectionHeaderCountriesList: UITableViewCell {
         return img
     }()
     
-    private lazy var countryName: UILabel = {
+    private lazy var countryTitle: UILabel = {
         let label = UILabel()
         label.text = "USA"
+        label.numberOfLines = 2
+        label.lineBreakMode = .byWordWrapping
         label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.preferredMaxLayoutWidth = 200
         return label
     }()
     
-    private lazy var cityName: UILabel = {
+    private lazy var citySubtitle: UILabel = {
         let label = UILabel()
         label.text = "New York"
         label.textColor = UIColor(red: 136/255, green: 136/255, blue: 136/255, alpha: 1)
@@ -35,7 +43,7 @@ class SectionHeaderCountriesList: UITableViewCell {
     }()
     
     private lazy var labelStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [countryName, cityName])
+        let stackView = UIStackView(arrangedSubviews: [countryTitle, citySubtitle])
         stackView.axis = .vertical
         stackView.spacing = 4
         
@@ -53,9 +61,44 @@ class SectionHeaderCountriesList: UITableViewCell {
         
         return icon
     }()
+    
+    //MARK: - After toggle
+    private lazy var populationLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Population: 19 mln"
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.textColor = UIColor(red: 136/255, green: 136/255, blue: 136/255, alpha: 1)
+        return label
+    }()
+    
+    private lazy var areaLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Area: 19 mln km"
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.textColor = UIColor(red: 136/255, green: 136/255, blue: 136/255, alpha: 1)
+        return label
+    }()
+    
+    private lazy var currenciesLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Currencies: Tenge (T) KZT"
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.textColor = UIColor(red: 136/255, green: 136/255, blue: 136/255, alpha: 1)
+        return label
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [populationLabel, areaLabel, currenciesLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        return stackView
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.backgroundColor = UIColor.init(red: 247/255, green: 248/255, blue: 249/255, alpha: 1)
+        
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(moveToVC)))
         
         setUpViews()
         setUpConstraints()
@@ -69,10 +112,23 @@ class SectionHeaderCountriesList: UITableViewCell {
         return toggleIconBtn
     }
     
+    func setData(with model: GeographicDatum) {
+        countryTitle.text = model.name.common
+        citySubtitle.text = model.capital?[0] ?? "capital"
+        
+        DispatchQueue.main.async {
+            let url = URL(string: model.flags.png)
+            self.flagImg.kf.setImage(with: url)
+        }
+    }
+    
+    @objc func moveToVC() {
+        outputDetail?()
+    }
 }
 
 //MARK: - setUpViews and setUpConstraints
-extension SectionHeaderCountriesList {
+extension CountriesListTableViewCell {
     func setUpViews() {
         contentView.addSubview(flagImg)
         contentView.addSubview(labelStackView)

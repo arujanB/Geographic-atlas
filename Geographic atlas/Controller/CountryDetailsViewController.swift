@@ -8,11 +8,27 @@
 import UIKit
 
 class CountryDetailsViewController: UIViewController {
+    private let apiCaller = APICaller()
+        
+    var strangerData: GeographicDatum
+    
+    init(geographicDataOfOneModel: GeographicDatum) {
+        self.strangerData = geographicDataOfOneModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private let sectionArray: [String] = ["Region: ", "Capital: ", "Capital Coordinates: ", "Population: ", "Area: ", "Currency: ", "Timezones: "]
     
     private lazy var flagImg: UIImageView = {
         var img = UIImageView()
-        img.image = UIImage(named: "1")
+        DispatchQueue.main.async {
+            let url = URL(string: self.strangerData.flags.png)
+            img.kf.setImage(with: url)
+        }
         img.layer.cornerRadius = 12
         img.layer.masksToBounds = true
         
@@ -21,7 +37,7 @@ class CountryDetailsViewController: UIViewController {
     
     private lazy var detailTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(InfoTableViewCell.self, forCellReuseIdentifier: InfoTableViewCell.IDENTIFIER)
+        tableView.register(CountryDetailsTableViewCell.self, forCellReuseIdentifier: CountryDetailsTableViewCell.IDENTIFIER)
         tableView.allowsSelection = false
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorStyle = .none
@@ -51,12 +67,6 @@ extension CountryDetailsViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sectionArray.count
     }
-    
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        tableView.backgroundColor = .orange
-//
-//        return sectionArray[section]
-//    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UITableView()
@@ -94,11 +104,18 @@ extension CountryDetailsViewController: UITableViewDataSource {
     
     //cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if section == 6 {
+//            return strangerData.timezones[section].count
+//        }
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.IDENTIFIER, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: CountryDetailsTableViewCell.IDENTIFIER, for: indexPath) as! CountryDetailsTableViewCell
+        guard let subregion = strangerData.subregion, let capital = strangerData.capital?[0], let coordination = strangerData.capitalInfo.latlng?[indexPath.row] else { fatalError() }
+        
+        let cellData: [String] = [subregion, capital, "\(coordination)", "\(strangerData.population)", "\(strangerData.area)", "Currency: ", "\(strangerData.timezones[indexPath.row])"]
+        cell.setData(with: cellData[indexPath.section])
         return cell
     }
     
@@ -120,7 +137,7 @@ extension CountryDetailsViewController: UITableViewDelegate {
 //MARK: - NavigationBar title
 extension CountryDetailsViewController{
     func setNavigationTitle() {
-        navigationItem.title = "Title"
+        navigationItem.title = strangerData.name.common
     }
 }
 
