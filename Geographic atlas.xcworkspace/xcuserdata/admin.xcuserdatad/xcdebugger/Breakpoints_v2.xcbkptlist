@@ -14,8 +14,8 @@
             filePath = "Geographic atlas/Controller/CountriesListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -30,13 +30,13 @@
             filePath = "Geographic atlas/Controller/CountriesListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "ED682BBA-7CBC-49C8-A36B-1D17CF74280E - d1d0c1892a419722"
+                  uuid = "ED682BBA-7CBC-49C8-A36B-1D17CF74280E - d1d0c1892a4197c3"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -46,12 +46,12 @@
                   urlString = "file:///Users/admin/Desktop/Geographic%20atlas/Geographic%20atlas/Controller/CountriesListViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "54"
-                  endingLineNumber = "54"
+                  startingLineNumber = "55"
+                  endingLineNumber = "55"
                   offsetFromSymbolStart = "515">
                </Location>
                <Location
-                  uuid = "ED682BBA-7CBC-49C8-A36B-1D17CF74280E - e36472c30cc519c8"
+                  uuid = "ED682BBA-7CBC-49C8-A36B-1D17CF74280E - e36472c30cc51929"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -61,12 +61,12 @@
                   urlString = "file:///Users/admin/Desktop/Geographic%20atlas/Geographic%20atlas/Controller/CountriesListViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "54"
-                  endingLineNumber = "54"
+                  startingLineNumber = "55"
+                  endingLineNumber = "55"
                   offsetFromSymbolStart = "176">
                </Location>
                <Location
-                  uuid = "ED682BBA-7CBC-49C8-A36B-1D17CF74280E - 3d59afa6af5d6d57"
+                  uuid = "ED682BBA-7CBC-49C8-A36B-1D17CF74280E - 3d59afa6af5d6db6"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -76,9 +76,9 @@
                   urlString = "file:///Users/admin/Desktop/Geographic%20atlas/Geographic%20atlas/Controller/CountriesListViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "54"
-                  endingLineNumber = "54"
-                  offsetFromSymbolStart = "74">
+                  startingLineNumber = "55"
+                  endingLineNumber = "55"
+                  offsetFromSymbolStart = "49">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -109,8 +109,8 @@
             filePath = "Geographic atlas/Controller/CountriesListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "233"
-            endingLineNumber = "233"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -125,9 +125,41 @@
             filePath = "Geographic atlas/Controller/CountriesListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
             landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AE54D861-3222-407A-BE6D-2EC51B7211C6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Geographic atlas/Controller/CountriesListViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "280"
+            endingLineNumber = "280"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "48B2BCF0-F71C-4100-8C4C-6B83D9C3C58F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Geographic atlas/View/MainTableViewCell/CountriesListTableViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "setData(with:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -16,21 +16,24 @@ class CountriesListViewController: UIViewController {
     var geographicData: GeographicData = []
     var moveVCModelData: GeographicDatum?
     
+    //expanded
+    var expandedGeographicData: [ExpendedModelDatum] = []
+    
     //sectionNames
     var regionArraySet: Set<String> = []
     var sectionArray: [String] = []
     
     //each section data
-    var europeArray: [GeographicDatum] = []
-    var asiaArray: [GeographicDatum] = []
-    var africaArray: [GeographicDatum] = []
-    var oceaniaArray: [GeographicDatum] = []
-    var americasArray: [GeographicDatum] = []
-    var antarcticArray: [GeographicDatum] = []
+    var europeArray: [ExpendedModelDatum] = []
+    var asiaArray: [ExpendedModelDatum] = []
+    var africaArray: [ExpendedModelDatum] = []
+    var oceaniaArray: [ExpendedModelDatum] = []
+    var americasArray: [ExpendedModelDatum] = []
+    var antarcticArray: [ExpendedModelDatum] = []
     
     private lazy var countriesTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(CountriesListTableViewCell.self, forCellReuseIdentifier: CountriesListTableViewCell.IDENTIFIER)
+        tableView.register(CountriesLisTableViewCell.self, forCellReuseIdentifier: CountriesLisTableViewCell.IDENTIFIER)
         tableView.allowsSelection = false
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorStyle = .none
@@ -52,6 +55,11 @@ class CountriesListViewController: UIViewController {
         apiCaller.fetchRequestMainData (completion: { [weak self] values in
             DispatchQueue.main.async {
                 guard let self else { return }
+                
+                self.expandedGeographicData = values.map {
+                    ExpendedModelDatum(geographicModel: $0, isExpended: false)
+                }
+                
                 self.geographicData = values
                 self.countriesTableView.reloadData()
             }
@@ -68,23 +76,23 @@ extension CountriesListViewController: UITableViewDataSource {
     
     //section
     func numberOfSections(in tableView: UITableView) -> Int {
-        for i in geographicData {
-            print(i.region)
-            regionArraySet.insert(i.region)
+        for i in expandedGeographicData {
+            print(i.geographicModel.region)
+            regionArraySet.insert(i.geographicModel.region)
             print(regionArraySet)
             
             //divied data for each section
-            if i.region == "Europe" {
+            if i.geographicModel.region == "Europe" {
                 europeArray.append(i)
-            }else if i.region == "Asia" {
+            }else if i.geographicModel.region == "Asia" {
                 asiaArray.append(i)
-            }else if i.region == "Africa" {
+            }else if i.geographicModel.region == "Africa" {
                 africaArray.append(i)
-            }else if i.region == "Oceania" {
+            }else if i.geographicModel.region == "Oceania" {
                 oceaniaArray.append(i)
-            }else if i.region == "Americas" {
+            }else if i.geographicModel.region == "Americas" {
                 americasArray.append(i)
-            }else if i.region == "Antarctic" {
+            }else if i.geographicModel.region == "Antarctic" {
                 antarcticArray.append(i)
             }
         }
@@ -123,7 +131,7 @@ extension CountriesListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CountriesListTableViewCell.IDENTIFIER, for: indexPath) as! CountriesListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CountriesLisTableViewCell.IDENTIFIER, for: indexPath) as! CountriesLisTableViewCell
         cell.navigationController = self.navigationController
         
         if sectionArray[indexPath.section] == "Europe" {
@@ -136,11 +144,11 @@ extension CountriesListViewController: UITableViewDataSource {
 
                 self.apiCaller.fetchRequestOneData(completion: { values in
                     DispatchQueue.main.async {
-                        let vc = CountryDetailsViewController(geographicDataOfOneModel: self.europeArray[indexPath.row])
+                        let vc = CountryDetailsViewController(geographicDataOfOneModel: self.europeArray[indexPath.row].geographicModel)
                         navigationController.pushViewController(vc, animated: true)
                         print("Tapped cell")
                     }
-                }, tld: self.europeArray[indexPath.row].tld![0] )
+                }, tld: self.europeArray[indexPath.row].geographicModel.tld![0] )
             }
         }else if sectionArray[indexPath.section] == "Asia" {
             cell.setData(with: asiaArray[indexPath.row])
@@ -151,11 +159,11 @@ extension CountriesListViewController: UITableViewDataSource {
 
                 self.apiCaller.fetchRequestOneData(completion: { values in
                     DispatchQueue.main.async {
-                        let vc = CountryDetailsViewController(geographicDataOfOneModel: self.asiaArray[indexPath.row])
+                        let vc = CountryDetailsViewController(geographicDataOfOneModel: self.asiaArray[indexPath.row].geographicModel)
                         navigationController.pushViewController(vc, animated: true)
                         print("Tapped cell")
                     }
-                }, tld: self.asiaArray[indexPath.row].tld![0] )
+                }, tld: self.asiaArray[indexPath.row].geographicModel.tld![0] )
             }
         }else if sectionArray[indexPath.section] == "Africa" {
             cell.setData(with: africaArray[indexPath.row])
@@ -166,11 +174,11 @@ extension CountriesListViewController: UITableViewDataSource {
 
                 self.apiCaller.fetchRequestOneData(completion: { values in
                     DispatchQueue.main.async {
-                        let vc = CountryDetailsViewController(geographicDataOfOneModel: self.africaArray[indexPath.row])
+                        let vc = CountryDetailsViewController(geographicDataOfOneModel: self.africaArray[indexPath.row].geographicModel)
                         navigationController.pushViewController(vc, animated: true)
                         print("Tapped cell")
                     }
-                }, tld: self.africaArray[indexPath.row].tld![0] )
+                }, tld: self.africaArray[indexPath.row].geographicModel.tld![0] )
             }
         }else if sectionArray[indexPath.section] == "Oceania" {
             cell.setData(with: oceaniaArray[indexPath.row])
@@ -181,11 +189,11 @@ extension CountriesListViewController: UITableViewDataSource {
 
                 self.apiCaller.fetchRequestOneData(completion: { values in
                     DispatchQueue.main.async {
-                        let vc = CountryDetailsViewController(geographicDataOfOneModel: self.oceaniaArray[indexPath.row])
+                        let vc = CountryDetailsViewController(geographicDataOfOneModel: self.oceaniaArray[indexPath.row].geographicModel)
                         navigationController.pushViewController(vc, animated: true)
                         print("Tapped cell")
                     }
-                }, tld: self.oceaniaArray[indexPath.row].tld![0] )
+                }, tld: self.oceaniaArray[indexPath.row].geographicModel.tld![0] )
             }
         }else if sectionArray[indexPath.section] == "Americas" {
             cell.setData(with: americasArray[indexPath.row])
@@ -196,11 +204,11 @@ extension CountriesListViewController: UITableViewDataSource {
 
                 self.apiCaller.fetchRequestOneData(completion: { values in
                     DispatchQueue.main.async {
-                        let vc = CountryDetailsViewController(geographicDataOfOneModel: self.americasArray[indexPath.row])
+                        let vc = CountryDetailsViewController(geographicDataOfOneModel: self.americasArray[indexPath.row].geographicModel)
                         navigationController.pushViewController(vc, animated: true)
                         print("Tapped cell")
                     }
-                }, tld: self.americasArray[indexPath.row].tld![0] )
+                }, tld: self.americasArray[indexPath.row].geographicModel.tld![0] )
             }
         }else if sectionArray[indexPath.section] == "Antarctic" {
             cell.setData(with: antarcticArray[indexPath.row])
@@ -211,13 +219,15 @@ extension CountriesListViewController: UITableViewDataSource {
 
                 self.apiCaller.fetchRequestOneData(completion: { values in
                     DispatchQueue.main.async {
-                        let vc = CountryDetailsViewController(geographicDataOfOneModel: self.antarcticArray[indexPath.row])
+                        let vc = CountryDetailsViewController(geographicDataOfOneModel: self.antarcticArray[indexPath.row].geographicModel)
                         navigationController.pushViewController(vc, animated: true)
                         print("Tapped cell")
                     }
-                }, tld: self.antarcticArray[indexPath.row].tld![0] )
+                }, tld: self.antarcticArray[indexPath.row].geographicModel.tld![0] )
             }
         }
+        
+/////////////////////////////////////
         
 //        cell.outputDetail = {
 //            guard let navigationController = self.navigationController else {
@@ -253,12 +263,22 @@ extension CountriesListViewController: UITableViewDataSource {
 //MARK: - tableView Delegate
 extension CountriesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 72
+        return UITableView.automaticDimension
 //        return 212
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        <#code#>
+//        tableView.deselectRow(at: indexPath, animated: true)
+//        guard let cell = tableView.cellForRow(at: indexPath) as? CountriesLisTableViewCell else {
+//            return
+//        }
+//
+//        UIView.animate(withDuration: 0.3) {
+//            self.countriesTableView.performBatchUpdates(nil)
+//        }
+        
+        expandedGeographicData[indexPath.row].isExpended.toggle()
+        countriesTableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
 

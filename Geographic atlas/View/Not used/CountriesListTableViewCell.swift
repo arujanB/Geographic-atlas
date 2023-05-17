@@ -87,7 +87,7 @@ class CountriesListTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var stackView: UIStackView = {
+    private lazy var expendableStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [populationLabel, areaLabel, currenciesLabel])
         stackView.axis = .vertical
         stackView.spacing = 8
@@ -112,14 +112,22 @@ class CountriesListTableViewCell: UITableViewCell {
         return toggleIconBtn
     }
     
-    func setData(with model: GeographicDatum) {
-        countryTitle.text = model.name.common
-        citySubtitle.text = model.capital?[0] ?? "capital"
+    func setData(with model: ExpendedModelDatum) {
+        countryTitle.text = model.geographicModel.name.common
+        citySubtitle.text = model.geographicModel.capital?[0] ?? "capital"
         
         DispatchQueue.main.async {
-            let url = URL(string: model.flags.png)
+            let url = URL(string: model.geographicModel.flags.png)
             self.flagImg.kf.setImage(with: url)
         }
+        
+        expendableStackView.isHidden = !model.isExpended
+        
+        toggleIconBtn.imageView?.image = (model.isExpended ? UIImage(systemName: "chevron.up") : UIImage(systemName: "chevron.down"))?.withRenderingMode(.alwaysTemplate)
+        
+//        if let image = (model.isExpended ? UIImage(systemName: "chevron.up") : UIImage(systemName: "chevron.down"))?.withRenderingMode(.alwaysTemplate) {
+//            toggleIconBtn.setImage(image, for: .normal)
+//        }
     }
     
     @objc func moveToVC() {
@@ -133,6 +141,7 @@ extension CountriesListTableViewCell {
         contentView.addSubview(flagImg)
         contentView.addSubview(labelStackView)
         contentView.addSubview(toggleIconBtn)
+        contentView.addSubview(expendableStackView)
     }
     
     func setUpConstraints() {
@@ -152,6 +161,11 @@ extension CountriesListTableViewCell {
         toggleIconBtn.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(17)
             make.top.equalToSuperview().inset(32)
+        }
+        
+        expendableStackView.snp.makeConstraints { make in
+            make.top.equalTo(labelStackView.snp.bottom).offset(12)
+            make.leading.trailing.equalToSuperview().inset(12)
         }
     }
 }

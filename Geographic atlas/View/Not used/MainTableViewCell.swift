@@ -70,9 +70,9 @@ extension MainTableViewCell: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = CountriesListTableViewCell()
+        let view = CountriesLisTableViewCell()
         
-        view.getToggleIcon()
+//        view.getToggleIcon()
         return view
     }
     
