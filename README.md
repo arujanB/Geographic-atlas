@@ -1,4 +1,4 @@
-# StrongTeamTestAssignmentChecker
+# Geographic atlas
 Please, first, run: `pod install`  
 Then open `StrongTeamTestAssignmentChecker.xcworkspace`.
 
